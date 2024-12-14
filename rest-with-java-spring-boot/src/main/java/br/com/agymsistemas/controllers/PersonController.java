@@ -1,86 +1,47 @@
 package br.com.agymsistemas.controllers;
 
-import java.util.concurrent.atomic.AtomicLong;
+import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.agymsistemas.converters.NumberConverter;
-import br.com.agymsistemas.exceptions.UnsupportedMathOperationException;
-import br.com.agymsistemas.math.SimpleMath;
+import br.com.agymsistemas.model.Person;
+import br.com.agymsistemas.services.PersonServices;
 
 @RestController
-public class MathController {
+@RequestMapping("/person")
+public class PersonController {
 
-	private final AtomicLong counter = new AtomicLong();
-	private SimpleMath math = new SimpleMath();
+	@Autowired
+	private PersonServices service;
 
-	@RequestMapping(value = "/sum/{numberOne}/{numberTwo}", method = RequestMethod.GET)
-	public Double sum(@PathVariable(value = "numberOne") String numberOne,
-			@PathVariable(value = "numberTwo") String numberTwo) throws Exception {
-
-		if (!NumberConverter.isNumeric(numberOne) || !NumberConverter.isNumeric(numberTwo)) {
-			throw new UnsupportedMathOperationException("Por favor, informe um número válido.");
-		}
-
-		return math.sum(NumberConverter.convertToDouble(numberOne), NumberConverter.convertToDouble(numberTwo));
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public Person findById(@PathVariable(value = "id") String id) throws Exception {
+		return service.findById(id);
 	}
 
-	@RequestMapping(value = "/subtraction/{numberOne}/{numberTwo}", method = RequestMethod.GET)
-	public Double subtraction(@PathVariable(value = "numberOne") String numberOne,
-			@PathVariable(value = "numberTwo") String numberTwo) throws Exception {
-
-		if (!NumberConverter.isNumeric(numberOne) || !NumberConverter.isNumeric(numberTwo)) {
-			throw new UnsupportedMathOperationException("Por favor, informe um número válido.");
-		}
-
-		return math.subtraction(NumberConverter.convertToDouble(numberOne), NumberConverter.convertToDouble(numberTwo));
+	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<Person> findAll() throws Exception {
+		return service.findAll();
 	}
 
-	@RequestMapping(value = "/multiplication/{numberOne}/{numberTwo}", method = RequestMethod.GET)
-	public Double multiplication(@PathVariable(value = "numberOne") String numberOne,
-			@PathVariable(value = "numberTwo") String numberTwo) throws Exception {
-
-		if (!NumberConverter.isNumeric(numberOne) || !NumberConverter.isNumeric(numberTwo)) {
-			throw new UnsupportedMathOperationException("Por favor, informe um número válido.");
-		}
-
-		return math.multiplication(NumberConverter.convertToDouble(numberOne),
-				NumberConverter.convertToDouble(numberTwo));
+	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public Person create(@RequestBody Person person) throws Exception {
+		return service.create(person);
 	}
-
-	@RequestMapping(value = "/division/{numberOne}/{numberTwo}", method = RequestMethod.GET)
-	public Double division(@PathVariable(value = "numberOne") String numberOne,
-			@PathVariable(value = "numberTwo") String numberTwo) throws Exception {
-
-		if (!NumberConverter.isNumeric(numberOne) || !NumberConverter.isNumeric(numberTwo)) {
-			throw new UnsupportedMathOperationException("Por favor, informe um número válido.");
-		}
-
-		return math.division(NumberConverter.convertToDouble(numberOne), NumberConverter.convertToDouble(numberTwo));
+	
+	@RequestMapping(method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public Person update(@RequestBody Person person) throws Exception {
+		return service.update(person);
 	}
-
-	@RequestMapping(value = "/mean/{numberOne}/{numberTwo}", method = RequestMethod.GET)
-	public Double mean(@PathVariable(value = "numberOne") String numberOne,
-			@PathVariable(value = "numberTwo") String numberTwo) throws Exception {
-
-		if (!NumberConverter.isNumeric(numberOne) || !NumberConverter.isNumeric(numberTwo)) {
-			throw new UnsupportedMathOperationException("Por favor, informe um número válido.");
-		}
-
-		return math.mean(NumberConverter.convertToDouble(numberOne), NumberConverter.convertToDouble(numberTwo));
+	
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	public void delete(@PathVariable(value = "id") String id) throws Exception {
+		service.delete(id);
 	}
-
-	@RequestMapping(value = "/squareRoot/{number}", method = RequestMethod.GET)
-	public Double squareRoot(@PathVariable(value = "number") String number) throws Exception {
-
-		if (!NumberConverter.isNumeric(number)) {
-			throw new UnsupportedMathOperationException("Por favor, informe um número válido.");
-		}
-
-		return math.squareRoot(NumberConverter.convertToDouble(number));
-	}
-
 }
