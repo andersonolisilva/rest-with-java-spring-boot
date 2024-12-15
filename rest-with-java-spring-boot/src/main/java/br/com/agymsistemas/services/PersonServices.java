@@ -7,8 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.agymsistemas.data.vo.v1.PersonVO;
+import br.com.agymsistemas.data.vo.v2.PersonVOV2;
 import br.com.agymsistemas.exceptions.ResourceNotFoundException;
 import br.com.agymsistemas.mapper.DozerMapper;
+import br.com.agymsistemas.mapper.custom.PersonMapper;
 import br.com.agymsistemas.model.Person;
 import br.com.agymsistemas.repositories.PersonRepository;
 
@@ -19,6 +21,9 @@ public class PersonServices {
 
 	@Autowired
 	PersonRepository repository;
+	
+	@Autowired
+	PersonMapper mapper;
 
 	public PersonVO findById(Long id) {
 		logger.info("Finding one person!!!");
@@ -45,6 +50,14 @@ public class PersonServices {
 		var vo = DozerMapper.parseObject(repository.save(entity), PersonVO.class);
 		return vo;
 	}
+	
+	public PersonVOV2 createV2(PersonVOV2 person) {
+		logger.info("Creating one person");
+
+		Person entity = mapper.convertVoToEntity(person);
+		var vo = mapper.convertEntityToVo(repository.save(entity));
+		return vo;
+	}
 
 	public PersonVO update(PersonVO person) {
 		logger.info("Updating one person");
@@ -68,4 +81,5 @@ public class PersonServices {
 
 		repository.delete(entity);
 	}
+
 }
