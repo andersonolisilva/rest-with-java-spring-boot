@@ -19,7 +19,7 @@ import br.com.agymsistemas.data.vo.v2.PersonVOV2;
 import br.com.agymsistemas.services.PersonServices;
 
 @RestController
-@RequestMapping("/person")
+@RequestMapping("/api/person/v1")
 public class PersonController {
 
 	@Autowired

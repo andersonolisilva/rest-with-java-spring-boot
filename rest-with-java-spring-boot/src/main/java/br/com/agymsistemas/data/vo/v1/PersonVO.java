@@ -3,12 +3,17 @@ package br.com.agymsistemas.data.vo.v1;
 import java.io.Serializable;
 import java.util.Objects;
 
+//@JsonPropertyOrder({"id","address","firstname","lastname","gender"})
 public class PersonVO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private Long id;
+	
+	//@JsonProperty("first_name")
 	private String firstName;
+	//@JsonProperty("last_name")
 	private String lastName;
+	//@JsonIgnore
 	private String address;
 	private String gender;
 
