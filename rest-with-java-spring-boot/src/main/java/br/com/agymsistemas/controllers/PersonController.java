@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.agymsistemas.model.Person;
+import br.com.agymsistemas.data.vo.v1.PersonVO;
 import br.com.agymsistemas.services.PersonServices;
 
 @RestController
@@ -25,22 +25,22 @@ public class PersonController {
 	private PersonServices service;
 
 	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public Person findById(@PathVariable(value = "id") Long id) throws Exception {
+	public PersonVO findById(@PathVariable(value = "id") Long id) throws Exception {
 		return service.findById(id);
 	}
 
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<Person> findAll() throws Exception {
+	public List<PersonVO> findAll() throws Exception {
 		return service.findAll();
 	}
 
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public Person create(@RequestBody Person person) throws Exception {
+	public PersonVO create(@RequestBody PersonVO person) throws Exception {
 		return service.create(person);
 	}
 	
 	@PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public Person update(@RequestBody Person person) throws Exception {
+	public PersonVO update(@RequestBody PersonVO person) throws Exception {
 		return service.update(person);
 	}
 	
