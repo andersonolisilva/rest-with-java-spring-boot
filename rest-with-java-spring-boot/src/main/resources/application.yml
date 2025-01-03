@@ -1,3 +1,12 @@
+server:
+  port: 8080
+cors:
+  originPatterns: http://localhost:3000,http://localhost:8080,https://agymsistemas.com.br
+security:
+  jwt:
+    token:
+      secret-key: 553cr37
+      expire-length: 36000000
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -14,3 +23,9 @@ spring:
       show-sql: false
   application:
     name: rest-with-java-sprint-boot 
+springdoc:
+  pathsToMatch: 
+    - /auth/**
+    - /api/**/v1/**
+  swagger-ui:
+    use-root-path: true
