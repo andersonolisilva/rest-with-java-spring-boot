@@ -1,11 +1,14 @@
-package br.com.agymsistemas.data.vo.v1.security;
+package br.com.agymsistemas.integrationtests.vo;
 
 import java.io.Serializable;
 
-public class AccountCredentialsVO implements Serializable {
+import jakarta.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
+public class AccountCredentialsVO implements Serializable{
 
 	private static final long serialVersionUID = 1L;
-
+	
 	private String username;
 	private String password;
 	

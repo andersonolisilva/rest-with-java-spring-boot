@@ -10,11 +10,11 @@ public class MockPerson {
 
 
     public Person mockEntity() {
-        return mockEntity(1);
+        return mockEntity(0);
     }
     
     public PersonVO mockVO() {
-        return mockVO(1);
+        return mockVO(0);
     }
     
     public List<Person> mockEntityList() {
